@@ -1,0 +1,6 @@
+{
+  "name": "prime-plumbing",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
