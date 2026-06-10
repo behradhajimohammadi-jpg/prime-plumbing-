@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plumbing Services | Prime Maintenance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:     #1b3a5c;
+      --navy-dk:  #132a43;
+      --teal:     #2a7d6e;
+      --teal-dk:  #1f6358;
+      --teal-lt:  #3a9484;
+      --gold:     #c9a060;
+      --white:    #ffffff;
+      --offwhite: #f7f9f8;
+      --light-bg: #eef4f2;
+      --text:     #1a2530;
+      --muted:    #556070;
+      --border:   #dde5e2;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── TOP INFO BAR ─── */
+    .topbar {
+      background: var(--navy);
+      padding: 9px 60px;
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 28px;
+    }
+    .topbar-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: rgba(255,255,255,0.75);
+      text-decoration: none;
+    }
+    .topbar-item svg { width: 13px; height: 13px; opacity: 0.65; }
+    .topbar-item:hover { color: var(--white); }
+    .topbar-divider { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+    /* ─── MAIN NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 76px;
+      box-shadow: 0 2px 12px rgba(27,58,92,0.07);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 11px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 46px; height: 46px;
+    }
+    .nav-logo-icon svg { width: 100%; height: 100%; }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1; }
+    .nav-brand-prime {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px; font-weight: 600;
+      letter-spacing: 0.12em; color: var(--navy);
+      text-transform: uppercase;
+    }
+    .nav-brand-sub {
+      font-size: 8px; letter-spacing: 0.20em;
+      color: var(--muted); text-transform: uppercase; margin-top: 2px;
+    }
+    .nav-links {
+      display: flex; gap: 32px; align-items: center; list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px; font-weight: 400; color: var(--text);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+    .nav-cta {
+      background: var(--navy); color: var(--white) !important;
+      padding: 11px 26px; border-radius: 4px;
+      font-size: 13px !important; font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--teal) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; min-height: 92vh;
+      display: flex; align-items: center;
+      overflow: hidden;
+      background: var(--navy-dk);
+    }
+    .hero-bg-image {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover; background-position: center 30%;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(19,42,67,0.88) 0%,
+        rgba(27,58,92,0.78) 50%,
+        rgba(27,58,92,0.45) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; padding: 0 60px;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(42,125,110,0.35);
+      border: 1px solid rgba(42,125,110,0.6);
+      backdrop-filter: blur(4px);
+      padding: 7px 18px; border-radius: 50px;
+      margin-bottom: 28px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; background: #7dd4c0;
+      border-radius: 50%; flex-shrink: 0;
+    }
+    .hero-badge-text {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #a8e4d8;
+    }
+    .hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700; font-size: clamp(42px, 5.5vw, 72px);
+      line-height: 1.1; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .hero-italic {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-weight: 400;
+      font-size: clamp(38px, 5vw, 66px);
+      color: var(--gold); line-height: 1.15;
+      display: block; margin-bottom: 28px;
+    }
+    .hero-body {
+      font-size: 15px; font-weight: 300; line-height: 1.8;
+      color: rgba(255,255,255,0.72); max-width: 500px;
+      margin-bottom: 40px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-teal {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--teal); color: var(--white);
+      font-size: 13px; font-weight: 500;
+      padding: 14px 30px; border-radius: 4px;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-teal:hover { background: var(--teal-lt); }
+    .btn-outline-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--white);
+      font-size: 13px; font-weight: 400;
+      padding: 13px 28px; border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.45);
+      text-decoration: none; transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline-white:hover {
+      border-color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.08);
+    }
+    .hero-trust {
+      margin-top: 48px; display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .hero-trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: rgba(255,255,255,0.55);
+    }
+    .hero-trust-item svg { width: 14px; height: 14px; }
+
+    /* ─── INTRO BAND ─── */
+    .intro-band {
+      background: var(--teal);
+      padding: 20px 60px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 18px;
+    }
+    .intro-band svg { width: 18px; height: 18px; color: rgba(255,255,255,0.7); flex-shrink: 0; }
+    .intro-band p {
+      font-size: 14px; color: var(--white); font-weight: 400; line-height: 1.5;
+    }
+    .intro-band strong { font-weight: 600; }
+
+    /* ─── SECTION ─── */
+    section { padding: 90px 60px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .label-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    }
+    .label-bar { width: 36px; height: 2px; background: var(--teal); }
+    .label-text {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--teal);
+    }
+    h2.sec-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 700; color: var(--navy); line-height: 1.15;
+    }
+    h2.sec-title em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-weight: 400; color: var(--teal);
+    }
+    .sec-body {
+      font-size: 15px; font-weight: 300; line-height: 1.85;
+      color: var(--muted); margin-top: 18px;
+    }
+
+    /* ─── ABOUT / INTRO ─── */
+    .about { background: var(--offwhite); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center;
+    }
+    .about-body p { font-size: 15px; line-height: 1.85; color: var(--muted); font-weight: 300; }
+    .about-body p + p { margin-top: 16px; }
+    .about-body strong { font-weight: 600; color: var(--navy); }
+    .about-card {
+      background: var(--navy);
+      border-radius: 8px; padding: 44px;
+      position: relative; overflow: hidden;
+    }
+    .about-card::after {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: var(--teal); opacity: 0.12; border-radius: 50%;
+    }
+    .ac-label {
+      font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 28px;
+    }
+    .ac-rate {
+      display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;
+    }
+    .ac-rate-num {
+      font-size: 60px; font-weight: 700; color: var(--white); line-height: 1;
+    }
+    .ac-rate-unit {
+      font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.6);
+    }
+    .ac-rate-sub {
+      font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 32px;
+    }
+    .ac-pills { display: flex; flex-direction: column; gap: 10px; }
+    .ac-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.06); border-radius: 6px;
+      padding: 10px 14px;
+    }
+    .ac-pill-check {
+      width: 18px; height: 18px; background: var(--teal);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .ac-pill-check svg { width: 10px; height: 10px; }
+    .ac-pill-text { font-size: 13px; color: rgba(255,255,255,0.75); }
+    .ac-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 24px 0; }
+    .ac-ot-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px; }
+    .ac-ot-rate { font-size: 28px; font-weight: 700; color: rgba(255,255,255,0.85); }
+
+    /* ─── SERVICES ─── */
+    .services { background: var(--white); }
+    .services-head {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: end; margin-bottom: 48px;
+    }
+    .services-desc { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.8; }
+    .svc-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .svc-card {
+      background: var(--offwhite);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 32px 28px;
+      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+    }
+    .svc-card:hover {
+      box-shadow: 0 8px 32px rgba(27,58,92,0.12);
+      transform: translateY(-3px);
+      border-color: var(--teal);
+    }
+    .svc-icon {
+      width: 46px; height: 46px; border-radius: 8px;
+      background: rgba(42,125,110,0.1);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .svc-icon svg { width: 22px; height: 22px; stroke: var(--teal); stroke-width: 1.8; fill: none; }
+    .svc-title {
+      font-size: 15px; font-weight: 600; color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .svc-body {
+      font-size: 13px; font-weight: 300; line-height: 1.75; color: var(--muted);
+    }
+
+    /* ─── PRICING ─── */
+    .pricing { background: var(--light-bg); }
+    .pricing-head { margin-bottom: 48px; }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .price-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .price-card.featured {
+      border-color: var(--teal);
+      box-shadow: 0 4px 20px rgba(42,125,110,0.15);
+    }
+    .price-card-header {
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .price-card.featured .price-card-header { background: var(--teal); border-color: var(--teal); }
+    .pch-title {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--navy);
+    }
+    .price-card.featured .pch-title { color: var(--white); }
+    .pch-badge {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; background: var(--navy);
+      color: var(--white); padding: 3px 8px; border-radius: 3px;
+    }
+    .price-card-body { padding: 8px 28px 24px; }
+    .price-row {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 13px 0; border-bottom: 1px solid #eef1ef;
+    }
+    .price-row:last-child { border-bottom: none; }
+    .pr-label { font-size: 13px; font-weight: 400; color: var(--muted); flex: 1; padding-right: 12px; line-height: 1.4; }
+    .pr-value { font-size: 16px; font-weight: 600; color: var(--navy); white-space: nowrap; }
+    .pr-value.waived {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal);
+    }
+    .price-note {
+      margin-top: 24px; padding: 18px 24px;
+      background: rgba(42,125,110,0.07);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 6px 6px 0;
+      font-size: 12px; color: var(--muted); line-height: 1.7;
+    }
+    .price-note strong { color: var(--teal); font-weight: 600; }
+
+    /* ─── WHY PRIME ─── */
+    .why { background: var(--navy); }
+    .why .sec-title { color: var(--white); }
+    .why .sec-title em { color: #7dd4c0; }
+    .why .label-bar { background: #7dd4c0; }
+    .why .label-text { color: #7dd4c0; }
+    .why-grid {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    }
+    .why-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 32px 28px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .why-card:hover { background: rgba(42,125,110,0.15); border-color: rgba(42,125,110,0.35); }
+    .wc-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 400; color: var(--teal);
+      line-height: 1; margin-bottom: 16px; opacity: 0.75;
+    }
+    .wc-title {
+      font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 10px;
+    }
+    .wc-body { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.8; }
+    .why-stats {
+      margin-top: 48px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 40px; gap: 0;
+    }
+    .wstat { text-align: center; padding: 0 24px; }
+    .wstat + .wstat { border-left: 1px solid rgba(255,255,255,0.08); }
+    .wstat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; font-weight: 400; color: var(--white); line-height: 1;
+    }
+    .wstat-label {
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-top: 8px;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: var(--offwhite);
+      padding: 90px 60px;
+      text-align: center;
+    }
+    .cta-inner { max-width: 640px; margin: 0 auto; }
+    .cta-section .sec-title { color: var(--navy); }
+    .cta-section .sec-title em { color: var(--teal); }
+    .cta-body {
+      font-size: 15px; font-weight: 300; color: var(--muted);
+      line-height: 1.8; margin: 20px 0 36px;
+    }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-navy {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: var(--white);
+      font-size: 13px; font-weight: 500;
+      padding: 14px 30px; border-radius: 4px;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-navy:hover { background: var(--navy-dk); }
+    .btn-outline-teal {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--teal);
+      font-size: 13px; font-weight: 500;
+      padding: 13px 28px; border-radius: 4px;
+      border: 1px solid var(--teal);
+      text-decoration: none; transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline-teal:hover { background: var(--teal); color: var(--white); }
+    .cta-contact-info {
+      margin-top: 36px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+    }
+    .cci {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--muted); text-decoration: none;
+    }
+    .cci svg { width: 15px; height: 15px; color: var(--teal); }
+    .cci:hover { color: var(--navy); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy-dk);
+      padding: 32px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-brand { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .footer-brand strong { color: rgba(255,255,255,0.7); letter-spacing: 0.06em; }
+    .footer-tagline {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 13px; color: rgba(255,255,255,0.3);
+    }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      .topbar, nav, section, .intro-band, .cta-section, footer { padding-left: 24px; padding-right: 24px; }
+      nav .nav-links { display: none; }
+      .about-grid, .services-head, .why-grid { grid-template-columns: 1fr; gap: 40px; }
+      .svc-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .why-stats { grid-template-columns: 1fr; }
+      .wstat + .wstat { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; margin-top: 24px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+      .hero-content { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP INFO BAR -->
+  <div class="topbar">
+    <a href="tel:+17782231227" class="topbar-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.82a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72 12.13 12.13 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.13 12.13 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      +1 (778) 223-1227
+    </a>
+    <div class="topbar-divider"></div>
+    <a href="mailto:info@prime-maintenance.ca" class="topbar-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      info@prime-maintenance.ca
+    </a>
+  </div>
+
+  <!-- MAIN NAV -->
+  <nav>
+    <a href="https://prime-maintenance.ca" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="25" cy="25" r="24" stroke="#1b3a5c" stroke-width="1.5"/>
+          <path d="M12 38V20l13-8 13 8v18" stroke="#1b3a5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 38v-9h10v9" stroke="#1b3a5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M25 12v-4M21 10l4-4 4 4" stroke="#2a7d6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-brand">
+        <span class="nav-brand-prime">Prime</span>
+        <span class="nav-brand-sub">Property Maintenance</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://prime-maintenance.ca">Home</a></li>
+      <li><a href="https://prime-maintenance.ca/about">About Us</a></li>
+      <li><a href="https://prime-maintenance.ca/services" class="active">Services</a></li>
+      <li><a href="https://prime-maintenance.ca/clients">Clients</a></li>
+      <li><a href="https://prime-maintenance.ca/contact">Contact</a></li>
+      <li><a href="#contact" class="nav-cta">Free Quote</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-image"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span class="hero-badge-text">New Service — Greater Vancouver &amp; Lower Mainland</span>
+      </div>
+      <h1>Professional Plumbing,</h1>
+      <span class="hero-italic">Delivered with Prime Standards.</span>
+      <p class="hero-body">
+        Prime Property Maintenance now offers full plumbing services — the same trusted partner managing your building, now handling your pipes, drains, and mechanical systems with licensed expertise.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-teal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.82a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72 12.13 12.13 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.13 12.13 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          Get a Free Quote
+        </a>
+        <a href="#pricing" class="btn-outline-white">View Pricing</a>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          WorkSafeBC Certified
+        </div>
+        <div class="hero-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          24/7 Emergency Response
+        </div>
+        <div class="hero-trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Licensed &amp; Insured
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p><strong>Plumbing is now part of the Prime portfolio.</strong> One vendor, one invoice, one accountable partner for your entire property.</p>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <div class="label-row"><div class="label-bar"></div><span class="label-text">About This Service</span></div>
+          <h2 class="sec-title">Complete Building Care,<br/><em>Under One Roof.</em></h2>
+          <div class="sec-body" style="margin-top:0;">
+            <div class="about-body">
+              <p>Prime Property Maintenance has been Vancouver's trusted building management partner for over 10 years. With the addition of <strong>licensed plumbing services</strong>, we now cover the full spectrum of commercial property needs.</p>
+              <p>No more coordinating separate plumbing contractors or chasing after-hours quotes. Your Prime account manager handles dispatch, follow-up, and reporting — exactly the same way we manage every other service.</p>
+              <p>We've partnered with a licensed plumbing provider to offer <strong>preferred-rate service</strong> exclusively for Prime clients — with truck and fuel surcharges waived, saving you on every call.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="about-card">
+            <div class="ac-label">Preferred Labour Rate · 2026</div>
+            <div class="ac-rate">
+              <span class="ac-rate-num">$140</span>
+              <span class="ac-rate-unit">/hr</span>
+            </div>
+            <div class="ac-rate-sub">Standard Plumbing · Mon–Fri, regular hours</div>
+            <div class="ac-pills">
+              <div class="ac-pill">
+                <div class="ac-pill-check"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></div>
+                <span class="ac-pill-text">Truck Charge — Waived</span>
+              </div>
+              <div class="ac-pill">
+                <div class="ac-pill-check"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></div>
+                <span class="ac-pill-text">Fuel Surcharge — Waived</span>
+              </div>
+              <div class="ac-pill">
+                <div class="ac-pill-check"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></div>
+                <span class="ac-pill-text">Single Point of Contact</span>
+              </div>
+            </div>
+            <div class="ac-divider"></div>
+            <div class="ac-ot-label">Overtime / After-Hours Rate</div>
+            <div class="ac-ot-rate">$210 <span style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.5)">/hr</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="container">
+      <div class="services-head">
+        <div>
+          <div class="label-row"><div class="label-bar"></div><span class="label-text">Services Offered</span></div>
+          <h2 class="sec-title">What We<br/><em>Cover</em></h2>
+        </div>
+        <p class="services-desc">From routine drain maintenance to full hydro jetting, backflow testing to heating and gas systems — complete commercial plumbing for your portfolio.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div class="svc-title">Standard Plumbing</div>
+          <div class="svc-body">Repairs, fixture installation, pipe maintenance, and all routine plumbing for commercial and multi-residential properties. Mon–Fri at $140/hr.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="svc-title">Hydro Jetting</div>
+          <div class="svc-body">High-pressure water jetting to clear blocked drains, grease buildup, and stubborn blockages throughout your building's drain systems. Equipment: $295.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12h3M19 12h3M12 2v3M12 19v3"/><path d="M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
+          </div>
+          <div class="svc-title">Camera Inspection</div>
+          <div class="svc-body">Advanced camera diagnostics to locate blockages, cracks, and root intrusions before they escalate into costly emergencies. Equipment: $450.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg>
+          </div>
+          <div class="svc-title">Drain Cleaning</div>
+          <div class="svc-body">Professional drain cleaning for floor drains, stack lines, and common-area plumbing. Hand auger ($20) and full drain cleaning equipment ($245).</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="svc-title">Backflow Testing</div>
+          <div class="svc-body">Certified backflow prevention device testing at $115/unit. Volume pricing for 10+ units. Jurisdiction and city fees may apply separately.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
+          </div>
+          <div class="svc-title">Heating &amp; Gas</div>
+          <div class="svc-body">Licensed heating and gas services for boilers and mechanical systems. Regular rate $160/hr · After-hours $240/hr. Always safe, always compliant.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="pricing-head">
+        <div class="label-row"><div class="label-bar"></div><span class="label-text">Transparent Pricing</span></div>
+        <h2 class="sec-title">2026 Preferred Rate <em>Schedule</em></h2>
+        <p class="sec-body" style="max-width:580px">All rates are labour only unless otherwise noted. Materials and specialty parts are billed separately. As a Prime client, truck and fuel surcharges are fully waived.</p>
+      </div>
+      <div class="pricing-grid">
+
+        <!-- Card 1 -->
+        <div class="price-card featured">
+          <div class="price-card-header">
+            <span class="pch-title">Preferred Labour Rates</span>
+            <span class="pch-badge">Prime Clients</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-row">
+              <span class="pr-label">Standard Plumbing<br/><span style="font-size:11px;color:#aaa">Mon–Fri, regular hours</span></span>
+              <span class="pr-value">$140<span style="font-size:12px;font-weight:400;color:var(--muted)">/hr</span></span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Overtime / After Hours</span>
+              <span class="pr-value">$210<span style="font-size:12px;font-weight:400;color:var(--muted)">/hr</span></span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Minimum Call-Out Rate</span>
+              <span class="pr-value">$282.50</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Truck Charge</span>
+              <span class="pr-value waived">Waived</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Fuel Surcharge</span>
+              <span class="pr-value waived">Waived</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="price-card">
+          <div class="price-card-header">
+            <span class="pch-title" style="color:var(--navy)">Hydro Jetting &amp; Camera</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-row">
+              <span class="pr-label">Hydro Jetter Equipment</span>
+              <span class="pr-value">$295.00</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Camera Equipment</span>
+              <span class="pr-value">$450.00</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Hand Auger</span>
+              <span class="pr-value">$20.00</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Thermal Scanner</span>
+              <span class="pr-value">$75.00</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Drain Cleaning Equipment</span>
+              <span class="pr-value">$245.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="price-card">
+          <div class="price-card-header">
+            <span class="pch-title" style="color:var(--navy)">Backflows &amp; Heating/Gas</span>
+          </div>
+          <div class="price-card-body">
+            <div class="price-row">
+              <span class="pr-label">Backflow Testing<br/><span style="font-size:11px;color:#aaa">Per unit</span></span>
+              <span class="pr-value">$115.00</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Jurisdiction / City Fee</span>
+              <span class="pr-value waived">Varies</span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Heating / Gas — Regular</span>
+              <span class="pr-value">$160<span style="font-size:12px;font-weight:400;color:var(--muted)">/hr</span></span>
+            </div>
+            <div class="price-row">
+              <span class="pr-label">Heating / Gas — After Hours</span>
+              <span class="pr-value">$240<span style="font-size:12px;font-weight:400;color:var(--muted)">/hr</span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="price-note">
+        <strong>Volume Pricing Available:</strong> Properties with 10 or more backflow units qualify for volume pricing. Contact your account manager for a custom quote. Materials and specialty parts are billed at cost in addition to all labour rates above.
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY PRIME -->
+  <section class="why">
+    <div class="container">
+      <div class="label-row"><div class="label-bar"></div><span class="label-text">Why Prime</span></div>
+      <h2 class="sec-title">The Advantage of<br/><em>One Partner</em></h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="wc-num">01</div>
+          <div class="wc-title">Single Point of Contact</div>
+          <div class="wc-body">Your existing Prime account manager coordinates plumbing dispatch, follow-up, and reporting. No new vendors, no new relationships to manage.</div>
+        </div>
+        <div class="why-card">
+          <div class="wc-num">02</div>
+          <div class="wc-title">Preferred Pricing, Waived Fees</div>
+          <div class="wc-body">As a Prime client you receive preferred labour rates with truck and fuel surcharges fully waived — savings that compound across a managed portfolio.</div>
+        </div>
+        <div class="why-card">
+          <div class="wc-num">03</div>
+          <div class="wc-title">24/7 Emergency Response</div>
+          <div class="wc-body">Plumbing emergencies don't follow business hours. After-hours service is available whenever your property needs it, at transparent overtime rates.</div>
+        </div>
+        <div class="why-card">
+          <div class="wc-num">04</div>
+          <div class="wc-title">Transparent Reporting</div>
+          <div class="wc-body">Every service call is documented and integrated into your Prime dashboard — time-stamped, photo-verified, and accountable to the same standard you expect.</div>
+        </div>
+      </div>
+      <div class="why-stats">
+        <div class="wstat">
+          <div class="wstat-num">10+</div>
+          <div class="wstat-label">Years in Greater Vancouver</div>
+        </div>
+        <div class="wstat">
+          <div class="wstat-num">24/7</div>
+          <div class="wstat-label">Emergency Availability</div>
+        </div>
+        <div class="wstat">
+          <div class="wstat-num">$0</div>
+          <div class="wstat-label">Truck &amp; Fuel Charges</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="cta-inner">
+      <div class="label-row" style="justify-content:center"><div class="label-bar"></div><span class="label-text">Get Started</span><div class="label-bar"></div></div>
+      <h2 class="sec-title">Ready to Add Plumbing<br/>to Your <em>Service Agreement?</em></h2>
+      <p class="cta-body">Whether it's a routine drain clean or an emergency call-out, Prime handles it. Reach out today to add plumbing to your Prime property plan.</p>
+      <div class="cta-buttons">
+        <a href="tel:+17782231227" class="btn-teal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.82a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72 12.13 12.13 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.13 12.13 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          Call Us Now
+        </a>
+        <a href="mailto:info@prime-maintenance.ca" class="btn-outline-teal">Send an Email</a>
+      </div>
+      <div class="cta-contact-info">
+        <a href="tel:+17782231227" class="cci">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.82a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72 12.13 12.13 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.13 12.13 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          +1 (778) 223-1227
+        </a>
+        <a href="mailto:info@prime-maintenance.ca" class="cci">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          info@prime-maintenance.ca
+        </a>
+        <span class="cci">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Greater Vancouver &amp; Lower Mainland
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand"><strong>PRIME</strong> Property Maintenance</div>
+    <div class="footer-tagline">Efficiency · Service Excellence · Reliability</div>
+    <div class="footer-copy">© 2026 Prime Property Maintenance. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>
